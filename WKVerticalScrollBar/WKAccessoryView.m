@@ -52,12 +52,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_textLabel release];
-    
-    [super dealloc];
-}
 
 - (UILabel *)textLabel
 {
@@ -66,8 +60,7 @@
 
 - (void)setTextLabel:(UILabel *)textLabel
 {
-    [_textLabel release];
-    _textLabel = [textLabel retain];
+    _textLabel = textLabel;
     
     [self setNeedsLayout];
 }

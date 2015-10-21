@@ -260,6 +260,7 @@
 		4B47E3AF159B93B300D73B5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WKVerticalScrollBar/WKVerticalScrollBar-Prefix.pch";
 				INFOPLIST_FILE = "WKVerticalScrollBar/WKVerticalScrollBar-Info.plist";
@@ -272,6 +273,7 @@
 		4B47E3B0159B93B300D73B5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WKVerticalScrollBar/WKVerticalScrollBar-Prefix.pch";
 				INFOPLIST_FILE = "WKVerticalScrollBar/WKVerticalScrollBar-Info.plist";

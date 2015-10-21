@@ -32,13 +32,6 @@
 @synthesize window = _window;
 @synthesize demoController = _demoController;
 
-- (void)dealloc
-{
-    [_window release];
-    [_demoController release];
-
-    [super dealloc];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

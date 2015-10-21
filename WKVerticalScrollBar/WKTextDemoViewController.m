@@ -30,12 +30,6 @@
 
 @implementation WKTextDemoViewController
 
-- (void)dealloc
-{
-    [demoView release];
-    
-    [super dealloc];
-}
 
 - (void)loadView
 {

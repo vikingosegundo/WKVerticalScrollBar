@@ -71,14 +71,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_textLabel release];
-    [_scrollView release];
-    [_verticalScrollBar release];
-
-    [super dealloc];
-}
 
 - (void)layoutSubviews
 {

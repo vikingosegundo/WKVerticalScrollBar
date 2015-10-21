@@ -55,8 +55,8 @@
 
 @property (nonatomic, readwrite) CGFloat handleMinimumHeight;
 
-@property (nonatomic, readwrite, retain) UIScrollView *scrollView;
-@property (nonatomic, readwrite, retain) UIView *handleAccessoryView;
+@property (nonatomic, readwrite, strong) UIScrollView *scrollView;
+@property (nonatomic, readwrite, strong) UIView *handleAccessoryView;
 
 - (void)setHandleColor:(UIColor *)color forState:(UIControlState)state;
 

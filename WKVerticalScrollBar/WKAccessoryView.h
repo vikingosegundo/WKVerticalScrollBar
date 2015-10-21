@@ -33,9 +33,9 @@
 }
 
 @property (nonatomic, readwrite) CGFloat arrowWidth;
-@property (nonatomic, readwrite, retain) UIColor *foregroundColor;
+@property (nonatomic, readwrite, strong) UIColor *foregroundColor;
 
 @property (nonatomic, readwrite) UIEdgeInsets labelEdgeInsets;
-@property (nonatomic, readonly) UILabel *textLabel;
+@property (unsafe_unretained, nonatomic, readonly) UILabel *textLabel;
 
 @end

@@ -29,7 +29,7 @@
 
 @interface WKAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (nonatomic, readwrite, retain) UIWindow *window;
+@property (nonatomic, readwrite, strong) UIWindow *window;
 @property (nonatomic, readonly) WKTextDemoViewController *demoController;
 
 @end

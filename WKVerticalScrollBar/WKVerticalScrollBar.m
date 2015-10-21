@@ -69,8 +69,8 @@
     
     handleHitArea = CGRectZero;
     
-    normalColor = [[UIColor colorWithWhite:0.6f alpha:1.0f] retain];
-    selectedColor = [[UIColor colorWithWhite:0.4f alpha:1.0f] retain];
+    normalColor = [UIColor colorWithWhite:0.6f alpha:1.0f];
+    selectedColor = [UIColor colorWithWhite:0.4f alpha:1.0f];
     
     handle = [[CALayer alloc] init];
     [handle setCornerRadius:_handleCornerRadius];
@@ -82,18 +82,12 @@
 
 - (void)dealloc
 {
-    [handle release];
     
     [_scrollView removeObserver:self forKeyPath:@"contentOffset"];
     [_scrollView removeObserver:self forKeyPath:@"contentSize"];
-    [_scrollView release];
     
-    [_handleAccessoryView release];
     
-    [normalColor release];
-    [selectedColor release];
 
-    [super dealloc];
 }
 
 - (UIScrollView *)scrollView
@@ -106,8 +100,7 @@
     [_scrollView removeObserver:self forKeyPath:@"contentOffset"];
     [_scrollView removeObserver:self forKeyPath:@"contentSize"];
 
-    [_scrollView release];
-    _scrollView = [scrollView retain];
+    _scrollView = scrollView;
     
     [_scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
     [_scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
@@ -129,9 +122,7 @@
 
 - (void)setHandleAccessoryView:(UIView *)handleAccessoryView
 {
-    [handleAccessoryView retain];
     [_handleAccessoryView removeFromSuperview];
-    [_handleAccessoryView release];
     _handleAccessoryView = handleAccessoryView;
     
     [_handleAccessoryView setAlpha:0.0f];
@@ -142,12 +133,8 @@
 - (void)setHandleColor:(UIColor *)color forState:(UIControlState)state
 {
     if (state == UIControlStateNormal) {
-        [color retain];
-        [normalColor release];
         normalColor = color;
     } else if (state == UIControlStateSelected) {
-        [color retain];
-        [selectedColor release];
         selectedColor = color;
     }
 }
