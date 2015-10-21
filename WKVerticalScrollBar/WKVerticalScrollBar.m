@@ -116,6 +116,12 @@
     [self setNeedsLayout];
 }
 
+- (void)setHandleWidth:(CGFloat)handleWidth
+{
+    _handleWidth = handleWidth;
+    [handle setFrame:CGRectMake(0.f, 0.f, _handleWidth, 0.f)];
+}
+
 - (UIView *)handleAccessoryView
 {
     return _handleAccessoryView;
