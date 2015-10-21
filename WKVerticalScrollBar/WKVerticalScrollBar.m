@@ -78,6 +78,7 @@
     [handle setFrame:CGRectMake(0, 0, _handleWidth, 0)];
     [handle setBackgroundColor:[normalColor CGColor]];
     [[self layer] addSublayer:handle];
+    self.alpha = 0;
 }
 
 - (void)dealloc
@@ -85,8 +86,8 @@
     
     [_scrollView removeObserver:self forKeyPath:@"contentOffset"];
     [_scrollView removeObserver:self forKeyPath:@"contentSize"];
-    
-    
+    [_scrollView removeObserver:self forKeyPath:@"decelerating"];
+    [_scrollView removeObserver:self forKeyPath:@"dragging"];
 
 }
 
@@ -99,11 +100,17 @@
 {
     [_scrollView removeObserver:self forKeyPath:@"contentOffset"];
     [_scrollView removeObserver:self forKeyPath:@"contentSize"];
+    [_scrollView removeObserver:self forKeyPath:@"decelerating"];
+    [_scrollView removeObserver:self forKeyPath:@"dragging"];
+
 
     _scrollView = scrollView;
     
     [_scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
     [_scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+    [_scrollView addObserver:self forKeyPath:@"decelerating" options:NSKeyValueObservingOptionNew context:nil];
+    [_scrollView addObserver:self forKeyPath:@"dragging" options:NSKeyValueObservingOptionNew context:nil];
+
     [_scrollView setShowsVerticalScrollIndicator:NO];
     
     [self setNeedsLayout];
@@ -321,8 +328,30 @@
     if (object != _scrollView) {
         return;
     }
-
+    
+    if ([keyPath isEqualToString:@"decelerating"]) {
+        if (!self.scrollView.isDecelerating && !self.scrollView.dragging) {
+            [self scrollingStopped];
+        }
+    } else if ([keyPath isEqualToString:@"dragging"]) {
+        if (self.scrollView.isDragging) {
+            [self draggingStarted];
+        }
+    }
     [self setNeedsLayout];
+}
+
+-(void)draggingStarted
+{
+    self.alpha = 1;
+}
+
+-(void)scrollingStopped
+{
+    [UIView animateWithDuration:.4 animations:^{
+        self.alpha = 0;
+    }];
+
 }
 
 @end
