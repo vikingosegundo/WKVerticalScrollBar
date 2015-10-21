@@ -33,7 +33,9 @@
 - (void)commonInit;
 @end
 
-@implementation WKVerticalScrollBar
+@implementation WKVerticalScrollBar{
+    BOOL _isAnimatingToHide;
+}
 
 @synthesize handleWidth = _handleWidth;
 @synthesize handleHitWidth = _handleHitWidth;
@@ -79,6 +81,7 @@
     [handle setBackgroundColor:[normalColor CGColor]];
     [[self layer] addSublayer:handle];
     self.alpha = 0;
+
 }
 
 - (void)dealloc
@@ -86,9 +89,6 @@
     
     [_scrollView removeObserver:self forKeyPath:@"contentOffset"];
     [_scrollView removeObserver:self forKeyPath:@"contentSize"];
-    [_scrollView removeObserver:self forKeyPath:@"decelerating"];
-    [_scrollView removeObserver:self forKeyPath:@"dragging"];
-
 }
 
 - (UIScrollView *)scrollView
@@ -100,17 +100,11 @@
 {
     [_scrollView removeObserver:self forKeyPath:@"contentOffset"];
     [_scrollView removeObserver:self forKeyPath:@"contentSize"];
-    [_scrollView removeObserver:self forKeyPath:@"decelerating"];
-    [_scrollView removeObserver:self forKeyPath:@"dragging"];
-
 
     _scrollView = scrollView;
     
-    [_scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
-    [_scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
-    [_scrollView addObserver:self forKeyPath:@"decelerating" options:NSKeyValueObservingOptionNew context:nil];
-    [_scrollView addObserver:self forKeyPath:@"dragging" options:NSKeyValueObservingOptionNew context:nil];
-
+    [_scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionPrior context:nil];
+    [_scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionPrior context:nil];
     [_scrollView setShowsVerticalScrollIndicator:NO];
     
     [self setNeedsLayout];
@@ -329,29 +323,26 @@
         return;
     }
     
-    if ([keyPath isEqualToString:@"decelerating"]) {
-        if (!self.scrollView.isDecelerating && !self.scrollView.dragging) {
-            [self scrollingStopped];
-        }
-    } else if ([keyPath isEqualToString:@"dragging"]) {
-        if (self.scrollView.isDragging) {
-            [self draggingStarted];
+    if (self.scrollView.isDecelerating && !self.scrollView.dragging) {
+        [self scrollingStopped];
+    } else if (self.scrollView.contentOffset.y > 1){
+        if (!self.alpha == 1) {
+            self.alpha = 1;
         }
     }
     [self setNeedsLayout];
 }
 
--(void)draggingStarted
-{
-    self.alpha = 1;
-}
-
 -(void)scrollingStopped
 {
-    [UIView animateWithDuration:.4 animations:^{
-        self.alpha = 0;
-    }];
-
+    if (!_isAnimatingToHide) {
+        _isAnimatingToHide = YES;
+        [UIView animateWithDuration:.4 animations:^{
+            self.alpha = 0;
+        } completion:^(BOOL finished) {
+            _isAnimatingToHide = NO;
+        }];
+    }
 }
 
 @end

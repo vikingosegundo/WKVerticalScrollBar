@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'WKVerticalScrollBar'
-  s.version      = '0.3.2'
+  s.version      = '0.3.3'
   s.license      = 'MIT'
   s.platform     = :ios
 
@@ -10,6 +10,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/litl/WKVerticalScrollBar.git' }
 
   s.source_files = 'WKVerticalScrollBar/WKVerticalScrollBar.{h,m}'
-  
+
   s.frameworks   = 'QuartzCore'
 end
